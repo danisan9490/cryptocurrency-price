@@ -1,7 +1,7 @@
 import React from 'react';
-import From from './components/Form/Form'
-import img from './crypto.png'
-import './App.css';
+import From from './components/Form/Form';
+import img from './crypto.png';
+import './App.css';;
 
 function App() {
   return (
