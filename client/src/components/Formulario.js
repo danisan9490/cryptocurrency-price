@@ -36,9 +36,9 @@ const Formulario = ({ guardarMoneda, guardarCriptomoneda }) => {
         { codigo: 'GBP', nombre: 'Pound sterling' }
     ];
 
-    const [moneda, SelectMonedas] = useMoneda('Elige tu Moneda', '', MONEDAS);
+    const [moneda, SelectMonedas] = useMoneda('Choose your coin', '', MONEDAS);
 
-    const [criptomoneda, SelectCripto] = useCriptomoneda('Elige tu Criptomoneda', '', listacripto);
+    const [criptomoneda, SelectCripto] = useCriptomoneda('Choose your Cryptocurrency', '', listacripto);
 
     useEffect(() => {
         const consultarAPI = async () => {
