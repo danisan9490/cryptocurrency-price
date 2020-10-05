@@ -23,24 +23,24 @@ const Select = styled.select`
 
 const useMoneda = (label, stateInicial, opciones) => {
 
-  const [state, actualizarState] = useState(stateInicial);
+    const [state, actualizarState] = useState(stateInicial);
 
-  const Seleccionar = () => (
-    <Fragment>
-      <Label>{label}</Label>
-      <Select
-        onChange={e => actualizarState(e.target.value)}
-        value={state}
-      >
-        <option value="">-- Select --</option>
-        {opciones.map(opcion => (
-          <option key={opcion.codigo} value={opcion.codigo}>{opcion.nombre}</option>
-        ))}
-      </Select>
-    </Fragment>
-  );
+    const Seleccionar = () => (
+        <Fragment>
+            <Label>{label}</Label>
+            <Select
+                onChange={e => actualizarState(e.target.value)}
+                value={state}
+            >
+                <option value="">- Seleccione -</option>
+                {opciones.map(opcion => (
+                    <option key={opcion.codigo} value={opcion.codigo}>{opcion.nombre}</option>
+                ))}
+            </Select>
+        </Fragment>
+    );
 
-  return [state, Seleccionar, actualizarState];
+    return [state, Seleccionar, actualizarState];
 }
 
-export default useMoneda; 
+export default useMoneda;

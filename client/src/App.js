@@ -1,7 +1,10 @@
-import React from 'react';
-import From from './components/Form/Form';
-import img from './crypto.png';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import axios from 'axios';
+import imagen from './cryptomonedas.png';
+import Formulario from './components/Formulario';
+import Cotizacion from './components/Cotizacion';
+import Spinner from './components/Spinner';
 
 const Contenedor = styled.div`
   max-width: 900px;
@@ -25,6 +28,7 @@ const Heading = styled.h1`
   font-size: 50px;
   margin-bottom: 50px;
   margin-top: 80px;
+
   &::after {
     content: '';
     width: 100px;
@@ -35,17 +39,55 @@ const Heading = styled.h1`
 `;
 
 function App() {
+
+  const [moneda, guardarMoneda] = useState('');
+  const [criptomoneda, guardarCriptomoneda] = useState('');
+  const [resultado, guardarResultado] = useState({});
+  const [cargando, guardarCargando] = useState(false);
+
+  useEffect(() => {
+
+    const cotizarCriptomoneda = async () => {
+      if (moneda === '') return;
+
+      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+
+      const resultado = await axios.get(url);
+
+      guardarCargando(true);
+
+      setTimeout(() => {
+
+        guardarCargando(false);
+
+        guardarResultado(resultado.data.DISPLAY[criptomoneda][moneda]);
+      }, 3000);
+
+
+    }
+    cotizarCriptomoneda();
+  }, [moneda, criptomoneda]);
+
+  const componente = (cargando) ? <Spinner /> : <Cotizacion resultado={resultado} />
+
   return (
     <Contenedor>
       <div>
-        <img
-          src={img}
-          alt="Crypto"
+        <Imagen
+          src={imagen}
+          alt="imagen cripto"
         />
       </div>
       <div>
-        <Heading>Know cryptocurrencies price instantly</Heading>
-        <From />
+        <Heading>Know Cryptocurrencies Price Instantly</Heading>
+
+        <Formulario
+          guardarMoneda={guardarMoneda}
+          guardarCriptomoneda={guardarCriptomoneda}
+        />
+
+        {componente}
+
       </div>
     </Contenedor>
   );
